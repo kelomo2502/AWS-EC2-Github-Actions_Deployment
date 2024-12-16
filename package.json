@@ -1,0 +1,19 @@
+{
+  "name": "aws-ec2-github-actions_deployment",
+  "version": "1.0.0",
+  "description": "- Define and understand the stages of a deployment pipeline\r - Learn about different deployment strategies",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  }
+}
