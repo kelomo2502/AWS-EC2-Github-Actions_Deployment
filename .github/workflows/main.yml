@@ -43,12 +43,17 @@ jobs:
         run: |
           echo "New tag: ${{ steps.bump_tag.outputs.new_tag }}"
 
+      - name: Verify new tag
+        run: echo "Verifying tag: ${{ steps.bump_tag.outputs.new_tag }}"
+
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
         with:
-          tag_name: ${{ steps.bump_tag.outputs.new_tag }}
+          tag_name: ${{ steps.bump_tag.outputs.new_tag }}  # Ensure tag_name is correctly set
           release_name: Release ${{ steps.bump_tag.outputs.new_tag }}
           body: |
             This is an automated release.
+          draft: false
+          prerelease: false
