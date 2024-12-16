@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
         with:
-          tag_name: ${{ steps.tag.outputs.new_tag }}
-          release_name: Release ${{ steps.tag.outputs.new_tag }}
+          tag_name: ${{ steps.tag.outputs.new_tag || 'v1.0.0' }} # Default to v1.0.0 if new_tag fails
+          release_name: Release ${{ steps.tag.outputs.new_tag || 'v1.0.0' }}
           body: |
             This is an automated release.
