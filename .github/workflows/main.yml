@@ -44,7 +44,8 @@ jobs:
           echo "New tag: ${{ steps.bump_tag.outputs.new_tag }}"
 
       - name: Verify new tag
-        run: echo "Verifying tag: ${{ steps.bump_tag.outputs.new_tag }}"
+        run: |
+         echo "Verifying tag: ${{ steps.bump_tag.outputs.new_tag }}"
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
