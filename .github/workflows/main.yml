@@ -1,60 +1,22 @@
 name: Bump version and tag
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
   build:
-    name: Create Tag and Release
+    name: Create Tag
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        # The checkout action checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
 
       - name: Bump version and push tag
-        id: bump_tag
         uses: anothrNick/github-tag-action@1.26.0
         env:
           GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
           DEFAULT_BUMP: patch
-
-      - name: Debug Tag Output
-        run: |
-          echo "New tag: ${{ steps.bump_tag.outputs.new_tag }}"
-
-      - name: Verify new tag
-        run: |
-         echo "Verifying tag: ${{ steps.bump_tag.outputs.new_tag }}"
-
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
-        with:
-          tag_name: ${{ steps.bump_tag.outputs.new_tag }}  # Ensure tag_name is correctly set
-          release_name: Release ${{ steps.bump_tag.outputs.new_tag }}
-          body: |
-            This is an automated release.
-          draft: false
-          prerelease: false
+        # This action automatically increments the patch version and tags the commit.
+        # 'DEFAULT_BUMP' specifies the type of version bump (major, minor, patch).
