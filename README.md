@@ -26,15 +26,36 @@
 
 ```yaml
 name: Bump version and tag
+
 on:
   push:
     branches:
       - main
 
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        # The checkout action checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Use the Node.js version your project requires
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
   build:
     name: Create Tag
     runs-on: ubuntu-latest
+    needs: test # Ensures the 'test' job runs first
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -45,8 +66,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
           DEFAULT_BUMP: patch
-        # This action automatically increments the patch version and tags the commit.
-        # 'DEFAULT_BUMP' specifies the type of version bump (major, minor, patch).
+
 
 ```
 
