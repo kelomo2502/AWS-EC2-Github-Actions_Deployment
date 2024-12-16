@@ -43,7 +43,7 @@ jobs:
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.26.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
           DEFAULT_BUMP: patch
         # This action automatically increments the patch version and tags the commit.
         # 'DEFAULT_BUMP' specifies the type of version bump (major, minor, patch).
