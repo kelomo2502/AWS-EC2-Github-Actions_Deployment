@@ -4,6 +4,7 @@
   "description": "- Define and understand the stages of a deployment pipeline\r - Learn about different deployment strategies",
   "main": "server.js",
   "scripts": {
+    "build": "echo 'No build step needed'",
     "start": "nodemon server.js",
     "test": "jest"
   },
