@@ -31,12 +31,12 @@ jobs:
           password: '${{ secrets.DOCKER_PASSWORD }}'
       - name: Build and push Docker image
         run: >
-          docker build -t my-todo-app .
+          docker build -t node-server .
 
-          docker tag my-todo-app:latest ${{ secrets.DOCKER_USERNAME
-          }}/my-todo-app:latest
+          docker tag node-server:latest ${{ secrets.DOCKER_USERNAME
+          }}/node-server:latest
 
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-todo-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/node-server:latest
       - name: Log out from Docker Hub
         run: docker logout
   deploy:
@@ -58,16 +58,16 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{
           secrets.DOCKER_PASSWORD }}
 
-          docker pull ${{ secrets.DOCKER_USERNAME }}/my-todo-app:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/node-server:latest
 
-          docker stop my-todo-app || true
+          docker stop node-server || true
 
-          docker rm my-todo-app || true
+          docker rm node-server || true
 
           docker rmi $(docker images -f "dangling=true" -q) || true
 
-          docker run -d --name my-todo-app -p 3000:3000 ${{
-          secrets.DOCKER_USERNAME }}/my-todo-app:latest
+          docker run -d --name node-server -p 3000:3000 ${{
+          secrets.DOCKER_USERNAME }}/node-server:latest
 
           docker system prune -af || true
 
