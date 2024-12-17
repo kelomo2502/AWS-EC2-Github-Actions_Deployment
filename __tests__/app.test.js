@@ -5,6 +5,6 @@ describe('GET /', () => {
     it('should return a greeting message', async () => {
         const response = await request(app).get('/');
         expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ message: 'A new day has come' });
+        expect(response.body).toEqual({ message: 'We believe in testing and home' });
     });
 });
