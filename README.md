@@ -72,3 +72,33 @@ jobs:
 
 ## Creating and managing releases
 
+1. Automating releases using github actions
+
+- Setup github actions to create new realease whenever a new tag is pushed to the repository
+
+```yaml
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        # Checks out the code in the tag that triggered the workflow.
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          # This step creates a new release in GitHub using the tag name.
+
+```
